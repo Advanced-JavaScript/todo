@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState ,useEffect } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
@@ -44,13 +45,13 @@ function ToDo() {
   }, []);
 
   useEffect(() => {
-    document.title = `To Do List: ${list.length}`
+    document.title = `To Do List: ${list.length}`;
   }, [list]);
   
   return (
     <Container className='container'>
       <Card>
-      <Row>
+        <Row>
           <Col>
             <header>
               <Navbar bg="dark" variant="dark">
@@ -74,18 +75,18 @@ function ToDo() {
           </Col>
 
           <Col md={8}>
-          <section className="todo">
+            <section className="todo">
               <div>
                 <TodoList
                   list={list}
                   handleComplete={toggleComplete}
                   handleRemove={handleDelete}
-                  />
+                />
               </div>
             </section>
           </Col>
         </Row>
-        </Card>
+      </Card>
     </Container>
 
   );
