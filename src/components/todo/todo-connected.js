@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
@@ -18,11 +19,11 @@ const ToDo = () => {
       mode: 'cors',
       cache: 'no-cache',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item)
+      body: JSON.stringify(item),
     })
       .then(response => response.json())
       .then(savedItem => {
-        setList([...list, savedItem])
+        setList([...list, savedItem]);
       })
       .catch(console.error);
   };
@@ -42,7 +43,7 @@ const ToDo = () => {
         mode: 'cors',
         cache: 'no-cache',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
+        body: JSON.stringify(item),
       })
         .then(response => response.json())
         .then(savedItem => {
