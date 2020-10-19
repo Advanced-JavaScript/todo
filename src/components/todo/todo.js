@@ -4,14 +4,21 @@ import TodoForm from './form.js';
 import TodoList from './list.js';
 import {Container, Navbar, Nav, Row, Col, Card} from 'react-bootstrap';
 import './todo.scss';
+import useAjax from '../hooks/useAjax';
 
 function ToDo() {
 
+  let url = 'https://ash-todolist.herokuapp.com/items';
+  
   const [list, setList] = useState([]);
+  const [item, setItem] = useState({});
+  const [id, setId] = useState();
+
 
   const addItem = (item) => {
-    item._id = Math.random();
     item.complete = false;
+    setItem(item);
+    postItem(item);
     setList([...list, item]);
   };
 
@@ -21,6 +28,8 @@ function ToDo() {
 
     if (item._id) {
       item.complete = !item.complete;
+      setItem(item);
+      putItem(item);
       let newList = list.map(listItem => listItem._id === item._id ? item : listItem);
       setList(newList);
     }
@@ -30,23 +39,23 @@ function ToDo() {
   const handleDelete = id => {
     let newList = list.filter( item => item._id !== id) || {};
     setList(newList);
+    setId(id);
+    removeItem(id);
   };
 
-  useEffect(() => {
-    let list = [
-      { _id: 1, complete: false, text: 'Clean the Kitchen', difficulty: 3, assignee: 'Person A'},
-      { _id: 2, complete: false, text: 'Do the Laundry', difficulty: 2, assignee: 'Person A'},
-      { _id: 3, complete: false, text: 'Walk the Dog', difficulty: 4, assignee: 'Person B'},
-      { _id: 4, complete: true, text: 'Do Homework', difficulty: 3, assignee: 'Person C'},
-      { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B'},
-    ];
-
-    setList(list);
-  }, []);
 
   useEffect(() => {
     document.title = `To Do List: ${list.length}`;
   }, [list]);
+
+  useEffect(() => {
+    getItem();
+  }, []);
+
+  const {getItem} = useAjax(setList);
+  const {postItem} = useAjax(item);
+  const {putItem} = useAjax(item);
+  const {removeItem} = useAjax(id);
   
   return (
     <Container className='container'>
@@ -90,7 +99,6 @@ function ToDo() {
     </Container>
 
   );
-
 
 }
 
