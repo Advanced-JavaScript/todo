@@ -15,7 +15,9 @@ const useForm = (cb) => {
 
   const handleInputChange = e => {
     e.preventDefault();
+    
     setValue({...value, [e.target.name]: e.target.value });
+    
   };
 
   return [handleSubmit, handleInputChange,  value];

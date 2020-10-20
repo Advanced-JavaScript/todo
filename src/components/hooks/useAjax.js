@@ -1,13 +1,42 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 
-const useAjax = ( body) => {
+const useAjax = ( body, extra) => {
   
   let url = 'https://ash-todolist.herokuapp.com/items';
   
   const getItem = async () => {
     await axios.get(url).then(item => {
       body(item.data.results);
+    }).catch(console.error);
+  };
+
+  const getSpecific = async (extra) => {
+    await axios.get(url).then(item => {
+      const results = [];
+      if(extra.complete){
+        item.data.results.forEach(e => {
+          if(e.complete.toString() === extra.complete){
+            results.push(e);
+          }
+        });
+      }
+      else if(extra.difficulty){
+        item.data.results.forEach(e => {
+          if(e.difficulty.toString() === extra.difficulty){
+            results.push(e);
+          }
+        });
+      }
+      else if(extra.assignee){
+        item.data.results.forEach(e => {
+          if(e.assignee.toString() === extra.assignee){
+            results.push(e);
+          }
+        });
+      }
+      else { body(item.data.results); return;}
+      body(results);
     }).catch(console.error);
   };
 
@@ -32,7 +61,7 @@ const useAjax = ( body) => {
       .catch(console.error);
   };
 
-  return { getItem, postItem, putItem, removeItem};
+  return { getItem, postItem, putItem, removeItem, getSpecific};
 
 };
 
