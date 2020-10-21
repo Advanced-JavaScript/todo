@@ -17,6 +17,15 @@ The browser should show you the following page:
 
 ![](./assets/main.JPG)
 
+
+About the capabilities for each role:
+
+- 'admin': ['create', 'read', 'update', 'delete'];
+- 'editor': ['create', 'read', 'update'];
+- 'writer': ['create', 'read'];
+- 'user': ['read'];
+
+
 Heroku API:
 
 - https://ash-todolist.herokuapp.com/items
